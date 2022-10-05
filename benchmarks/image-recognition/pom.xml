@@ -19,6 +19,12 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+        <groupId>${quarkus.platform.group-id}</groupId>
+        <artifactId>quarkus-amazon-services-bom</artifactId>
+        <version>${quarkus.platform.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
       <dependency>
         <groupId>ai.djl</groupId>
         <artifactId>bom</artifactId>
@@ -32,12 +38,10 @@
     <dependency>
       <groupId>software.amazon.awssdk</groupId>
       <artifactId>url-connection-client</artifactId>
-      <version>2.17.140</version>
     </dependency>
     <dependency>
       <groupId>io.quarkiverse.amazonservices</groupId>
       <artifactId>quarkus-amazon-s3</artifactId>
-      <version>1.0.2</version>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
