@@ -17,7 +17,6 @@
     <module>network</module>
     <module>clock-synchronization</module>
     <module>server-reply</module>
-    <module>dynamic-html</module>
     <module>uploader</module>
     <module>compress</module>
     <module>thumbnailer</module>
@@ -27,6 +26,7 @@
     <module>dna-visualization</module>
     <module>graph-pagerank</module>
 -->
+    <module>dynamic-html</module>
     <module>image-recognition</module>
   </modules>
   <properties>
