@@ -25,8 +25,8 @@
     <module>graph-bfs</module>
     <module>dna-visualization</module>
     <module>graph-pagerank</module>
--->
     <module>dynamic-html</module>
+-->
     <module>image-recognition</module>
   </modules>
   <properties>
