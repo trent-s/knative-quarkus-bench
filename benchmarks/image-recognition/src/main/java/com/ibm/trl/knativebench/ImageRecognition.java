@@ -124,12 +124,16 @@ public class ImageRecognition {
 	    model.close();
         } catch (ModelNotFoundException e) {
             e.printStackTrace();
+	    model.close();
         } catch (MalformedModelException e) {
             e.printStackTrace();
+	    model.close();
         } catch (IOException e) {
             e.printStackTrace();
+	    model.close();
         } catch (TranslateException e) {
             e.printStackTrace();
+	    model.close();
         }
         long process_end = System.nanoTime();
 
