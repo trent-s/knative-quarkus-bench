@@ -121,7 +121,7 @@ public class ImageRecognition {
             Predictor<Image, Classifications> predictor = model.newPredictor();
             String tokens = predictor.predict(img).best().getClassName();
             ret = tokens.substring(tokens.indexOf(' ') + 1);
-	    model.close(); translator.close(); predictor.close(); criteria.close();
+	    model.close();  predictor.close();
         } catch (ModelNotFoundException e) {
             e.printStackTrace();
         } catch (MalformedModelException e) {
@@ -132,8 +132,6 @@ public class ImageRecognition {
             e.printStackTrace();
         }
         long process_end = System.nanoTime();
-
-	builder.close();
 
         long image_download_time = (image_download_end - image_download_begin)/1000;
         long model_download_time = (model_download_end - model_download_begin) / 1000;
