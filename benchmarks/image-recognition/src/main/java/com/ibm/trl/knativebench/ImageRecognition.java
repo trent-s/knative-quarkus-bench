@@ -121,22 +121,19 @@ public class ImageRecognition {
             Predictor<Image, Classifications> predictor = model.newPredictor();
             String tokens = predictor.predict(img).best().getClassName();
             ret = tokens.substring(tokens.indexOf(' ') + 1);
-	    model.close();
+	    model.close(); translator.close(); predictor.close(); criteria.close();
         } catch (ModelNotFoundException e) {
             e.printStackTrace();
-	    model.close();
         } catch (MalformedModelException e) {
             e.printStackTrace();
-	    model.close();
         } catch (IOException e) {
             e.printStackTrace();
-	    model.close();
         } catch (TranslateException e) {
             e.printStackTrace();
-	    model.close();
         }
         long process_end = System.nanoTime();
 
+	builder.close();
 
         long image_download_time = (image_download_end - image_download_begin)/1000;
         long model_download_time = (model_download_end - model_download_begin) / 1000;
