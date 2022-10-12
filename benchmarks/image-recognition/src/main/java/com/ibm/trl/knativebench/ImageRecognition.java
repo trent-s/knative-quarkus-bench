@@ -95,12 +95,9 @@ public class ImageRecognition {
         long synset_download_end = System.nanoTime();
 
         long model_process_begin = System.nanoTime();
-        Builder<Image, Classifications> builder ;
-        synchronized (Criteria.builder) {
-		builder = Criteria.builder()
+        Builder<Image, Classifications> builder = Criteria.builder()
                 .setTypes(Image.class, Classifications.class)
                 .optModelPath(Paths.get(model_path));
-	}
         long model_process_end = System.nanoTime();
 
         long process_begin = System.nanoTime();
@@ -110,9 +107,7 @@ public class ImageRecognition {
 
         String ret = "";
         try {
-            Translator<Image, Classifications> translator ;
-            synchronized (ImageClassificationTranslator.builder) {
-                translator = ImageClassificationTranslator.builder()
+            Translator<Image, Classifications> translator = ImageClassificationTranslator.builder()
                 .addTransform(new Resize(256))
                 .addTransform(new CenterCrop(224, 224))
                 .addTransform(new ToTensor())
@@ -122,19 +117,15 @@ public class ImageRecognition {
                 .optApplySoftmax(true)
                 .optSynsetUrl("file:" + synset_path)
                 .build();
-            }
 
-            Criteria<Image, Classifications> criteria;
-            synchronized (builder.optTranslator) {
-                criteria = builder.optTranslator(translator).build();
-                ZooModel<Image, Classifications> model = criteria.loadModel();
-                Predictor<Image, Classifications> predictor = model.newPredictor();
-                String tokens = predictor.predict(img).best().getClassName();
-                ret = tokens.substring(tokens.indexOf(' ') + 1);
-                model.getNDManager().close();
-	        predictor.close();
-	        model.close();
-            }
+            Criteria<Image, Classifications> criteria = builder.optTranslator(translator).build();
+            ZooModel<Image, Classifications> model = criteria.loadModel();
+            Predictor<Image, Classifications> predictor = model.newPredictor();
+            String tokens = predictor.predict(img).best().getClassName();
+            ret = tokens.substring(tokens.indexOf(' ') + 1);
+            model.getNDManager().close();
+	    predictor.close();
+	    model.close();
         } catch (ModelNotFoundException e) {
             e.printStackTrace();
         } catch (MalformedModelException e) {
