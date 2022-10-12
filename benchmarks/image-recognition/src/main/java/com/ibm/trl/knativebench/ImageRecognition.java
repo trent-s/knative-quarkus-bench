@@ -48,7 +48,6 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 public class ImageRecognition {
     private static final double nanosecInSec = 1_000_000_000.0;
-    final Object lock = new Object();
 
     @Inject
     S3Client s3;
@@ -97,7 +96,7 @@ public class ImageRecognition {
 
         long model_process_begin = System.nanoTime();
         Builder<Image, Classifications> builder ;
-        synchronized (lock) {
+        synchronized (this) {
 		builder = Criteria.builder()
                 .setTypes(Image.class, Classifications.class)
                 .optModelPath(Paths.get(model_path));
@@ -112,7 +111,7 @@ public class ImageRecognition {
         String ret = "";
         try {
             Translator<Image, Classifications> translator ;
-            synchronized (lock) {
+            synchronized (this) {
                 translator = ImageClassificationTranslator.builder()
                 .addTransform(new Resize(256))
                 .addTransform(new CenterCrop(224, 224))
@@ -125,7 +124,7 @@ public class ImageRecognition {
                 .build();
             }
 
-            synchronized (lock) {
+            synchronized (this) {
                 Criteria<Image, Classifications> criteria = builder.optTranslator(translator).build();
                 ZooModel<Image, Classifications> model = criteria.loadModel();
                 Predictor<Image, Classifications> predictor = model.newPredictor();
