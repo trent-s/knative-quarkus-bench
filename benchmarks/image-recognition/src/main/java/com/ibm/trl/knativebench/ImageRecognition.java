@@ -96,7 +96,7 @@ public class ImageRecognition {
 
         long model_process_begin = System.nanoTime();
         Builder<Image, Classifications> builder ;
-        synchronized (this) {
+        synchronized (System.out) {
 		builder = Criteria.builder()
                 .setTypes(Image.class, Classifications.class)
                 .optModelPath(Paths.get(model_path));
@@ -111,7 +111,7 @@ public class ImageRecognition {
         String ret = "";
         try {
             Translator<Image, Classifications> translator ;
-            synchronized (this) {
+            synchronized (System.out) {
                 translator = ImageClassificationTranslator.builder()
                 .addTransform(new Resize(256))
                 .addTransform(new CenterCrop(224, 224))
@@ -124,7 +124,7 @@ public class ImageRecognition {
                 .build();
             }
 
-            synchronized (this) {
+            synchronized (System.out) {
                 Criteria<Image, Classifications> criteria = builder.optTranslator(translator).build();
                 ZooModel<Image, Classifications> model = criteria.loadModel();
                 Predictor<Image, Classifications> predictor = model.newPredictor();
