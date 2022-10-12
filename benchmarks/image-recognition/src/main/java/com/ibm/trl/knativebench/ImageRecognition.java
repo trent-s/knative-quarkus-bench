@@ -97,9 +97,11 @@ public class ImageRecognition {
 
         long model_process_begin = System.nanoTime();
         Builder<Image, Classifications> builder ;
-        synchronized (lock) builder = Criteria.builder()
+        synchronized (lock) {
+		builder = Criteria.builder()
                 .setTypes(Image.class, Classifications.class)
                 .optModelPath(Paths.get(model_path));
+		}
         long model_process_end = System.nanoTime();
 
         long process_begin = System.nanoTime();
