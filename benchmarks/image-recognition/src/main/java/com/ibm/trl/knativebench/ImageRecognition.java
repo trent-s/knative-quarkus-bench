@@ -96,7 +96,7 @@ public class ImageRecognition {
 
         long model_process_begin = System.nanoTime();
         Builder<Image, Classifications> builder ;
-        synchronized (System.out) {
+        synchronized (ai.djl.repository.zoo.Criteria.Builder) {
 		builder = Criteria.builder()
                 .setTypes(Image.class, Classifications.class)
                 .optModelPath(Paths.get(model_path));
@@ -111,7 +111,7 @@ public class ImageRecognition {
         String ret = "";
         try {
             Translator<Image, Classifications> translator ;
-            synchronized (System.out) {
+            synchronized (ai.djl.translate.Translator) {
                 translator = ImageClassificationTranslator.builder()
                 .addTransform(new Resize(256))
                 .addTransform(new CenterCrop(224, 224))
@@ -125,12 +125,12 @@ public class ImageRecognition {
             }
 
             Criteria<Image, Classifications> criteria;
-            synchronized (System.out) {
+            synchronized (ai.djl.repository.zoo.Criteria.Builder) {
                 criteria = builder.optTranslator(translator).build();
+                ZooModel<Image, Classifications> model = criteria.loadModel();
+                Predictor<Image, Classifications> predictor = model.newPredictor();
+                String tokens = predictor.predict(img).best().getClassName();
             }
-            ZooModel<Image, Classifications> model = criteria.loadModel();
-            Predictor<Image, Classifications> predictor = model.newPredictor();
-            String tokens = predictor.predict(img).best().getClassName();
             ret = tokens.substring(tokens.indexOf(' ') + 1);
             model.getNDManager().close();
 	    predictor.close();
