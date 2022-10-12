@@ -125,13 +125,16 @@ public class ImageRecognition {
                 .build();
             }
 
-            Criteria<Image, Classifications> criteria = builder.optTranslator(translator).build();
-            ZooModel<Image, Classifications> model = criteria.loadModel();
-            Predictor<Image, Classifications> predictor = model.newPredictor();
-            String tokens = predictor.predict(img).best().getClassName();
-            ret = tokens.substring(tokens.indexOf(' ') + 1);
-            model.getNDManager().close();
-//	    model.close();  predictor.close();
+            synchronized (lock) {
+                Criteria<Image, Classifications> criteria = builder.optTranslator(translator).build();
+                ZooModel<Image, Classifications> model = criteria.loadModel();
+                Predictor<Image, Classifications> predictor = model.newPredictor();
+                String tokens = predictor.predict(img).best().getClassName();
+                ret = tokens.substring(tokens.indexOf(' ') + 1);
+                model.getNDManager().close();
+	        predictor.close();
+	        model.close();
+            }
         } catch (ModelNotFoundException e) {
             e.printStackTrace();
         } catch (MalformedModelException e) {
