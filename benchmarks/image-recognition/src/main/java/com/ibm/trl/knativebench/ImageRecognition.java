@@ -96,7 +96,7 @@ public class ImageRecognition {
 
         long model_process_begin = System.nanoTime();
         Builder<Image, Classifications> builder ;
-        synchronized (ai.djl.repository.zoo.Criteria.Builder) {
+        synchronized (ai.djl.repository.zoo.Criteria.Builder.builder) {
 		builder = Criteria.builder()
                 .setTypes(Image.class, Classifications.class)
                 .optModelPath(Paths.get(model_path));
@@ -130,11 +130,11 @@ public class ImageRecognition {
                 ZooModel<Image, Classifications> model = criteria.loadModel();
                 Predictor<Image, Classifications> predictor = model.newPredictor();
                 String tokens = predictor.predict(img).best().getClassName();
+                ret = tokens.substring(tokens.indexOf(' ') + 1);
+                model.getNDManager().close();
+	        predictor.close();
+	        model.close();
             }
-            ret = tokens.substring(tokens.indexOf(' ') + 1);
-            model.getNDManager().close();
-	    predictor.close();
-	    model.close();
         } catch (ModelNotFoundException e) {
             e.printStackTrace();
         } catch (MalformedModelException e) {
