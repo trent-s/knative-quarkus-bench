@@ -124,7 +124,7 @@ public class ImageRecognition {
                 .build();
             }
 
-            synchronized (System.out) {
+            synchronized (this) {
                 Criteria<Image, Classifications> criteria = builder.optTranslator(translator).build();
                 ZooModel<Image, Classifications> model = criteria.loadModel();
                 Predictor<Image, Classifications> predictor = model.newPredictor();
