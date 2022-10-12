@@ -101,7 +101,7 @@ public class ImageRecognition {
 		builder = Criteria.builder()
                 .setTypes(Image.class, Classifications.class)
                 .optModelPath(Paths.get(model_path));
-		}
+	}
         long model_process_end = System.nanoTime();
 
         long process_begin = System.nanoTime();
@@ -111,7 +111,9 @@ public class ImageRecognition {
 
         String ret = "";
         try {
-            Translator<Image, Classifications> translator = ImageClassificationTranslator.builder()
+            Translator<Image, Classifications> translator ;
+            synchronized (lock) {
+                translator = ImageClassificationTranslator.builder()
                 .addTransform(new Resize(256))
                 .addTransform(new CenterCrop(224, 224))
                 .addTransform(new ToTensor())
@@ -121,6 +123,7 @@ public class ImageRecognition {
                 .optApplySoftmax(true)
                 .optSynsetUrl("file:" + synset_path)
                 .build();
+            }
 
             Criteria<Image, Classifications> criteria = builder.optTranslator(translator).build();
             ZooModel<Image, Classifications> model = criteria.loadModel();
