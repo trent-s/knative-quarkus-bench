@@ -96,7 +96,7 @@ public class ImageRecognition {
 
         long model_process_begin = System.nanoTime();
         Builder<Image, Classifications> builder ;
-        synchronized (ai.djl.repository.zoo.Criteria.Builder.builder) {
+        synchronized (Criteria.builder) {
 		builder = Criteria.builder()
                 .setTypes(Image.class, Classifications.class)
                 .optModelPath(Paths.get(model_path));
@@ -111,7 +111,7 @@ public class ImageRecognition {
         String ret = "";
         try {
             Translator<Image, Classifications> translator ;
-            synchronized (ai.djl.translate.Translator) {
+            synchronized (ImageClassificationTranslator.builder) {
                 translator = ImageClassificationTranslator.builder()
                 .addTransform(new Resize(256))
                 .addTransform(new CenterCrop(224, 224))
@@ -125,7 +125,7 @@ public class ImageRecognition {
             }
 
             Criteria<Image, Classifications> criteria;
-            synchronized (ai.djl.repository.zoo.Criteria.Builder) {
+            synchronized (builder.optTranslator) {
                 criteria = builder.optTranslator(translator).build();
                 ZooModel<Image, Classifications> model = criteria.loadModel();
                 Predictor<Image, Classifications> predictor = model.newPredictor();
