@@ -48,6 +48,7 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 public class ImageRecognition {
     private static final double nanosecInSec = 1_000_000_000.0;
+    final Object lock = new Object();
 
     @Inject
     S3Client s3;
@@ -95,7 +96,8 @@ public class ImageRecognition {
         long synset_download_end = System.nanoTime();
 
         long model_process_begin = System.nanoTime();
-        Builder<Image, Classifications> builder = Criteria.builder()
+        Builder<Image, Classifications> builder ;
+        synchronized (lock) builder = Criteria.builder()
                 .setTypes(Image.class, Classifications.class)
                 .optModelPath(Paths.get(model_path));
         long model_process_end = System.nanoTime();
