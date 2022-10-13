@@ -150,13 +150,13 @@ public class ImageRecognition {
                 .build();
 
             Criteria<Image, Classifications> criteria = model.optTranslator(translator).build();
-            ZooModel<Image, Classifications> model = criteria.loadModel();
-            Predictor<Image, Classifications> predictor = model.newPredictor();
+            ZooModel<Image, Classifications> zooModel = criteria.loadModel();
+            Predictor<Image, Classifications> predictor = zooModel.newPredictor();
             String tokens = predictor.predict(img).best().getClassName();
             ret = tokens.substring(tokens.indexOf(' ') + 1);
-            model.getNDManager().close();
 	    predictor.close();
-	    model.close();
+            zooModel.getNDManager().close();
+	    zooModel.close();
         } catch (ModelNotFoundException e) {
             e.printStackTrace();
         } catch (MalformedModelException e) {
