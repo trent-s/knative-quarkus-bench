@@ -48,3 +48,11 @@ jobs:
           echo
           echo "cc version:"
           cc -v
+          echo set output
+          set
+          echo
+          echo type gu
+          type gu
+          echo
+          echo gu --version
+          gu --version
