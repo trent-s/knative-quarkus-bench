@@ -52,3 +52,7 @@ jobs:
           echo
           echo "cc version:"
           cc -v
+          echo
+          echo set output
+          set
+          
