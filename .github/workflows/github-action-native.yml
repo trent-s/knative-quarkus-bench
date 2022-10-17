@@ -48,8 +48,6 @@ jobs:
           echo
           echo "cc version:"
           cc -v
+          echo
           echo set output
           set
-          echo
-          echo find output
-          find / -name '*graalvm*' 2>/dev/null
