@@ -51,8 +51,5 @@ jobs:
           echo set output
           set
           echo
-          echo type gu
-          type gu
-          echo
-          echo gu --version
-          gu --version
+          echo find output
+          find / -name '*graalvm*' 2>/dev/null
