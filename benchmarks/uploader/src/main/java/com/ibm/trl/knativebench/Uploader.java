@@ -157,7 +157,7 @@ public class Uploader {
         }
 
 
-        File filePath=new File(String.format("/tmp/120-%s.txt",key,uuid));
+        File filePath=new File(String.format("/tmp/120-%s-%s.txt",key,uuid.toString()));
         long downloadStartTime = System.nanoTime();
         downloadFile(input_bucket, key+"/yes.txt", filePath.toString());
         long downloadStopTime = System.nanoTime();
@@ -176,6 +176,7 @@ public class Uploader {
         retVal.measurement.put("upload_time",   (double)uploadTime);
 
         deleteFile(input_bucket, filePath.toString());
+	filePath.delete();
         log.info("retVal.measurement="+retVal.measurement.toString());
 
         return (retVal);
