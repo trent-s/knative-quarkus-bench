@@ -167,6 +167,9 @@ public class Uploader {
         uploadFile(output_bucket, filePath.toString(), filePath.toString());
         long uploadStopTime = System.nanoTime();
 
+        deleteFile(output_bucket, filePath.toString());
+	filePath.delete();
+
         double downloadTime = (downloadStopTime - downloadStartTime)/1000000000.0;
         double uploadTime = (uploadStopTime - uploadStartTime)/1000000000.0;
         
@@ -175,8 +178,6 @@ public class Uploader {
         retVal.measurement.put("download_time",  (double)downloadTime);
         retVal.measurement.put("upload_time",   (double)uploadTime);
 
-        deleteFile(input_bucket, filePath.toString());
-	filePath.delete();
         log.info("retVal.measurement="+retVal.measurement.toString());
 
         return (retVal);
