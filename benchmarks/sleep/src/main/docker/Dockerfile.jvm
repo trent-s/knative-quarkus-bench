@@ -51,4 +51,4 @@ COPY --chown=1001 target/quarkus-app/quarkus/ /deployments/quarkus/
 EXPOSE 8080
 USER 1001
 
-ENTRYPOINT [ "sh", "-c", "cat /proc/cpuinfo; /deployments/run-java.sh" ]
+ENTRYPOINT [ "sh", "-c", "grep 'model name' /proc/cpuinfo | head -1; /deployments/run-java.sh" ]

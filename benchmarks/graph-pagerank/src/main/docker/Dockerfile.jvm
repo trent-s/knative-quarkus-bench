@@ -92,4 +92,4 @@ ENV AB_JOLOKIA_OFF=""
 ENV JAVA_OPTS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 ENV JAVA_APP_JAR="/deployments/quarkus-run.jar"
 
-CMD [ "sh", "-c", "cat /proc/cpuinfo; /usr/local/s2i/run" ]
+CMD [ "sh", "-c", "grep 'model name' /proc/cpuinfo | head -1; /usr/local/s2i/run" ]

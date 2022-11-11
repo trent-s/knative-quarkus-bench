@@ -25,4 +25,4 @@ EXPOSE 8080
 USER 1001
 
 ENV JAVA_OPTIONS -Dquarkus.http.host=0.0.0.0
-CMD ["sh", "-c", "cat /proc/cpuinfo; ./application ${JAVA_OPTIONS}"]
+CMD ["sh", "-c", "grep 'model name' /proc/cpuinfo | head -1; ./application ${JAVA_OPTIONS}"]
