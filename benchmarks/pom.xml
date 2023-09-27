@@ -15,6 +15,7 @@
 <!--
 -->
     <module>sleep</module>
+    <module>helloworld</module>
     <module>network</module>
     <module>clock-synchronization</module>
     <module>server-reply</module>
