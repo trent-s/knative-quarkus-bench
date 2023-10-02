@@ -19,15 +19,16 @@
     <module>network</module>
     <module>clock-synchronization</module>
     <module>server-reply</module>
+    <module>dynamic-html</module>
     <module>uploader</module>
     <module>compress</module>
     <module>thumbnailer</module>
     <module>video-processing</module>
+    <module>image-recognition</module>
     <module>graph-mst</module>
     <module>graph-bfs</module>
     <module>dna-visualization</module>
     <module>graph-pagerank</module>
-    <module>dynamic-html</module>
     <module>image-recognition</module>
   </modules>
   <properties>
